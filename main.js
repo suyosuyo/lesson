@@ -1,41 +1,52 @@
-let duration = 500;
+// ナビゲーション
 
-$(function(){
-    $('.content').hover(slideIn,slideOut);
-});
-
-function slideIn(){
-    // $('.caption1').stop();
-    // $('.Caption2').stop();
-    // $('.caption1').animate({ top: "20%" }, duration);
-    // $('.Caption2').animate({ top: "20%" }, duration); 
-
-    $('.caption1,.Caption2').stop().animate({ top: "20%" }, duration);
-    // $('.Caption2').stop().animate({ top: "20%" }, duration); 
-};
-
-function slideOut() {
-    $('.caption1').stop();
-    $('.Caption2').stop();
-    $('.caption1').animate({ top: "80%"  }, duration);
-    $('.Caption2').animate({ top: "100%" }, duration);
-};
+$(function() {
+    $("ul.botan li").hover(
+      function() {
+        $(".course:not(:animated)", this).slideDown();
+      },
+       function() {
+         $(".course", this).slideUp();
+      }
+    );
+  });
+// なぜかすぐ帰る
 
 
 
-//キャプション下から
-// $(function () {
-//     $('.content').hover(function () {
-//         $('.caption1').stop();
-//         $('.Caption2').stop();
-//         $('.caption1').animate({ top: "20%" }, 500);
-//         $('.Caption2').animate({ top: "20%" }, 500);
-//     }, function () {
-//         $('.caption1').stop();
-//         $('.Caption2').stop();
-//         $('.caption1').animate({ top: "80%" }, 500);
-//         $('.Caption2').animate({ top: "100%" }, 500);
-//     });
-// });
+//   画像切り替わり
 
-//  動きが連続してしまうので、ホバーをのけた時に中断する動きをつけたい → stop  500は0.5秒
+$(function () {
+    $(window).on("scroll", function () {
+      const sliderHeight = $(".koko").height();
+      if (sliderHeight - 30 < $(this).scrollTop()) {
+        $(".irasuto").addClass("wakatta");
+    } 
+    });
+  });
+
+
+
+//   質問のところ
+$('.risuto').on('click', function() {//タイトル要素をクリックしたら
+    var findElm = $(this).next(".mousikomi");//直後のアコーディオンを行うエリアを取得し
+    $(findElm).slideToggle();//アコーディオンの上下動作
+    $(this).removeClass('none');
+    $(".mousikomi").addClass("detekuru");
+  });
+//   なぜか一気に全部開く？
+
+
+// ローディング画面
+window.onload = () => {
+    // const snipper = document.getElementById('loading');
+    // snipper.classList.add('loaded');
+
+    setTimeout(classAdd,1000)
+    // 遅らせたいやつ、時間(2000は２秒)
+}
+
+const classAdd = () => {
+    const snipper = document.getElementById('loading');
+    snipper.classList.add('loaded');
+}
