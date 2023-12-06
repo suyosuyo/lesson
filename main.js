@@ -1,145 +1,111 @@
-// 画面を読み込んだ時
-window.onload = () => {
-    setTimeout(classAdd,2000);
-    setTimeout(classAdd1,2000);
-    setTimeout(classAdd2,4000);
-}
 
-const classAdd = () => {
-    const sidecontentbox = document.getElementById('header');
-    sidecontentbox.classList.add('side');
-}
-
-const classAdd1 = () => {
-    const title = document.getElementById('titlebox');
-    title.classList.add('none');
-}
-
-const classAdd2 = () => {
-    const sidecontent1 = document.getElementById('sidebox');
-    const sidecontent2 = document.getElementById('navi');
-    const sidecontent3 = document.getElementById('harowa');
-    const sidecontent4 = document.getElementById('covicbox');
-    sidecontent1.classList.add('active');
-    sidecontent2.classList.add('active');
-    sidecontent3.classList.add('active');
-    sidecontent4.classList.add('active');
-}
-
-// staff紹介
-$(function() {
-    $(".staffcontentbox").hide();
-    $(".more").click(function() {
-        $(".staffcontentbox").slideToggle("1000");
-    });
-});
-// course
-var sX_syncerModal = 0 ;
-var sY_syncerModal = 0 ;
-
-function scrollposition(){
-	//スクロール位置を記録する
-	var dElm = document.documentElement , dBody = document.body;
-	sX_syncerModal = dElm.scrollLeft || dBody.scrollLeft;	//現在位置のX座標
-	sY_syncerModal = dElm.scrollTop || dBody.scrollTop;	//現在位置のY座標
-}
-
-$(function(){
-const open1 = $('.course1'),
-      open2 = $('.course2'),
-      open3 = $('.course3'),
-      close1 = $('.modal-close1'),
-      close2 = $('.modal-close2'),
-      close3 = $('.modal-close3'),
-      container1 = $('.modal-container1'),
-      container2 = $('.modal-container2'),
-      container3 = $('.modal-container3');
-
-      open1.on('click',function(){
-        container1.addClass('active');
-        return false;
-      });
-      open2.on('click',function(){
-        container2.addClass('active');
-        return false;
-      });
-      open3.on('click',function(){
-        container3.addClass('active');
-        return false;
-      });
-
-      close1.on('click',function(){
-        container1.removeClass('active');
-        console.log(close1);
-      });
-      close2.on('click',function(){
-        container2.removeClass('active');
-      });
-      close3.on('click',function(){
-        container3.removeClass('active');
-      });
-
-      $(document).on('click',function(e){
-        if(!$(e.target).closest('modal-body').length){
-            container1.removeClass('active');
-            container2.removeClass('active');
-            container3.removeClass('active');
-        }
-      });
-    });
-
-
-
-// map表示
-const delayScrollAnime = () => {
-
-  let time = 0.2;
-  let value = time;
-
-
-  $('.map').each(function () {
-      let scroll = $(window).scrollTop(); 
-      let windowHeight = $(window).height(); 
-
-      let elementHeight = $(this).offset().top; 
-      let childs = $(this).children();
-
-
-      if(scroll >= elementHeight - windowHeight){
-          
-          $(childs).each(function(){
-              if(!$(this).hasClass('fadein')){
-                  $(this).addClass('fadein');
-                  $(this).css("animation-delay",value + "s");
-                  value = value + time;
-              }
-          })
-      } else {
-          $(childs).removeClass('fadein');
-      }
+// ナビゲーション
+$(function () {
+  $('#target').click(() => {
+    $('#target').toggleClass('active');
+    $('#nav_target').toggleClass('nav_active');
   });
-} 
+  // ナビ内リンクでジャンプ時、メニューを閉じる
 
-$(window).scroll( () => {
-  delayScrollAnime();
+  $('.remove').click(() => {
+    $('#target').removeClass('active');
+    $('#nav_target').removeClass('nav_active');
+  });
 });
 
-$(window).on('load',() => {
-  delayScrollAnime();
+
+
+
+
+const FixedAnimation = () => {
+  let headerHeight
+}
+
+// イベントスライダー
+$(function () {
+  $('#js-slider-3').slick({
+    arrows: true, // 前・次のボタンを表示する
+    dots: true, // ドットナビゲーションを表示する
+    appendDots: $('.dots-3'), // ドットナビゲーションの生成位置を変更
+    autoplay: true,
+    autoplaySpeed: 5000,
+    slidesToShow: 1, // 表示させるスライド数
+    slidesToScroll: 1,
+    centerMode: true, // slidesToShowが奇数のとき、現在のスライドを中央に表示する
+    variableWidth: true, // スライド幅の自動計算を無効化
+    pauseOnHover: false, // マウスを乗せた際も動作を続ける
+    responsive: [
+      {
+        breakpoint: 769,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          slidesToShow: 1
+        }
+      },
+      {
+        breakpoint: 375,
+        settings: {
+          arrows: false,
+          centerMode: true,
+          slidesToShow: 1
+        }
+      }
+    ]
+  });
 });
 
+// イベントカレンダー
 
+$(function () {
+  $('.m-ivent-calendar').on('click', () => {
+    $('.m-ivent-span').toggleClass('m-span-active');
+  });
+});
+// イベントカレンダーボタン
 
+$(window).resize(function () {
+  let x = $(window).width();
+  let y = 600;
+  // console.log(x)
 
-
-// レスポンシブ ナビゲーション
-
-$('#nav').click(function () {
-  $(this).toggleClass('active');
-    $("#sumaho").toggleClass('panelactive');
+  if (x <= y) {
+    $('.m-ivent-btn').addClass('m-ivent-btn-active');
+  } else {
+    $('.m-ivent-btn').removeClass('m-ivent-btn-active');
+  };
 });
 
-$("#sumaho a").click(function () {
-    $(".bottom").removeClass('active');
-    $("#sumaho").removeClass('panelactive');
+$(window).on('load', function () {
+  let x = $(window).width();
+  let y = 600;
+  if (x <= y) {
+    $('.m-ivent-btn').addClass('m-ivent-btn-active');
+  } else {
+    $('.m-ivent-btn').removeClass('m-ivent-btn-active');
+  };
 });
+// 戻るボタン
+
+const FadeinAnimation = () => {
+  let headerHeight = $('#TOP').outerHeight(); // id="TOP"の高さを取得
+  let scroll = $(window).scrollTop();// スクロール値
+  if (scroll >= headerHeight) {
+    // スクロール値がヘッダーの高さより大きい時
+    $('.openbtn_top').addClass('fadein');
+  } else {
+    $('.openbtn_top').removeClass('fadein')
+    // $('.openbtn_top').addClass('fadeout')
+  }
+}
+// タイミング１
+// 画面をスクロールした時に動かす
+$(window).scroll(() => {
+  FadeinAnimation();
+});
+
+// タイミング２
+// ページを読みこんだ時に動かす
+$(window), on('load', () => {
+  FadeinAnimation();
+})
